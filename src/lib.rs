@@ -1,5 +1,7 @@
 mod utils;
 
+extern crate js_sys;
+
 use wasm_bindgen::prelude::*;
 use std::fmt;
 
@@ -9,6 +11,9 @@ use std::fmt;
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+
+
+
 
 #[wasm_bindgen]
 #[repr(u8)]
@@ -84,8 +89,8 @@ impl Universe {
         let height = 64;
 
         let cells = (0..width * height)
-            .map(|i| {
-                if i % 2 == 0 || i % 7 == 0 {
+            .map(|_i| {
+                if js_sys::Math::random() < 0.5 {
                     Cell::Alive
                 } else {
                     Cell::Dead
